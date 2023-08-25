@@ -445,7 +445,8 @@ a:active, a:focus, a:hover {
 }
 
 ul {
-  list-style-type: none;
+  /*list-style-type: none;*/
+  list-style: disc;
 }
 
 /*UFO*/
