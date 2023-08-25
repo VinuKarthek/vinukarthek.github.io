@@ -3,21 +3,27 @@ name: Build Docker Image
 on:
   push:
     branches:
-      - master  # Adjust this to your main branch name
+      - 'master'
 
 jobs:
-  build:
+  docker:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-
-    - name: Build and push Docker image
-      run: |
-        echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USERNAME --password-stdin
-        docker buildx build --file Dockerfile --tag vinukarthek/resume:${{ github.sha }} .
-        docker push vinukarthek/resume:${{ github.sha }}
-    env:
-      DOCKER_CLI_EXPERIMENTAL: enabled
-      DOCKER_BUILDKIT: 1
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/resume:latest
