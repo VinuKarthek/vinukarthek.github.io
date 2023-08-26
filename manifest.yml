@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: websites
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vinukarthek-resume-deployment
+  namespace: websites
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: vinukarthek-resume
+  template:
+    metadata:
+      labels:
+        app: vinukarthek-resume
+    spec:
+      containers:
+        - name: vinukarthek-resume-container
+          image: vinukarthek/resume:latest
+          ports:
+            - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: vinukarthek-resume-service
+  namespace: websites
+spec:
+  selector:
+    app: vinukarthek-resume
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: NodePort
