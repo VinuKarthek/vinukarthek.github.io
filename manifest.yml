@@ -38,6 +38,6 @@ spec:
     app: vinukarthek-resume
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 5000
+      port: 5000 # This is the port on the service
+      targetPort: 80 # This is the port on the pods
   type: NodePort
