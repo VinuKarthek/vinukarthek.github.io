@@ -26,4 +26,4 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/resume:${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/resume:${{ github.sha }}, ,$ {{ secrets.DOCKERHUB_USERNAME }}/resume:latest
